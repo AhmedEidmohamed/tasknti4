@@ -1,0 +1,318 @@
+import 'package:flutter/material.dart';
+import 'package:task4nti/myapp.dart';
+import 'package:task4nti/myhome.dart';
+
+void main() {
+  runApp( HomeScreen());
+}
+
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController mytab;
+
+  @override
+  void initState() {
+    super.initState();
+    mytab = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    mytab.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.grey[200],
+        drawer: Drawer(shadowColor: Colors.white,),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF1E3556),
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.white),
+          title: Text(
+            "AppBar",
+            style: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(70),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Container(
+                height: 45,
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Search...",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.search, color: Colors.grey),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        body: Column(
+          children: [
+            // tabs فوق
+            TabBar(
+              controller: mytab,
+              labelColor: Color(0xFF1E3556),
+              unselectedLabelColor: Colors.grey,
+              tabs: [
+                Tab(text: "Featured"),
+                Tab(text: "Categories"),
+                Tab(text: "Trending")
+              ],
+            ),
+
+            Expanded(
+              child: TabBarView(
+                controller: mytab,
+                children: [
+                  // tab الاول
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            "CustomScrollView",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+
+                        // البوكس الابيض الكبير
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Container(
+                            height: 320,
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.shade300,
+                                      blurRadius: 6,
+                                      spreadRadius: 2)
+                                ]),
+                            child: ListView(
+                              children: [
+                                // الصف الاول افقي
+                                SizedBox(
+                                  height: 220,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      productCard(
+                                          "Item Name", "Price", "images/5.jpg"),
+                                      productCard(
+                                          "Item Name", "Price", "images/4.jpg"),
+                                    ],
+                                  ),
+                                ),
+
+                                SizedBox(height: 12),
+
+                                // الصف التاني افقي
+                                SizedBox(
+                                  height: 220,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      productCard(
+                                          "Item Name", "Price", "images/2.jpg"),
+                                      productCard(
+                                          "Item Name", "Price", "images/6.jpg"),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            "ListView.horizontal",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+
+                        // صورة دائرية
+                        Container(
+                          width: 500,
+                          height: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: SizedBox(
+                            height: 80,
+                            child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage:
+                                              AssetImage("images/2.jpg"),
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage:
+                                              AssetImage("images/4.jpg"),
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage:
+                                              AssetImage("images/5.jpg"),
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage:
+                                              AssetImage("images/6.jpg"),
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage:
+                                              AssetImage("images/5.jpg"),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ]),
+                          ),
+                        ),
+
+                        SizedBox(height: 40),
+                      ],
+                    ),
+                  ),
+
+                  Center(child: Text("Categories")),
+                  Center(child: Text("Trending")),
+                ],
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Color(0xFF1E3556),
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.explore), label: "Explore"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart), label: "Cart"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// الكارت
+Widget productCard(String n, String p, String img) {
+  return Container(
+    width: 200,
+    margin: EdgeInsets.only(left: 16),
+    decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(color: Colors.grey.shade400, blurRadius: 5, spreadRadius: 1)
+        ]),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+          child: Image.asset(
+            img,
+            height: 130,
+            width: 200,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Text: '$n'"),
+              Text("Text: '$p'"),
+              Row(
+                children: [
+                  TextButton(onPressed: null, child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.grey
+                    ),
+                    child: Text('add to card'),
+                  )),
+                  SizedBox(width: 40,),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Icon(Icons.favorite_border),
+                    
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+
+
+
